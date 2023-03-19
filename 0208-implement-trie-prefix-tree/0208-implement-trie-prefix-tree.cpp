@@ -1,28 +1,57 @@
+struct Node{
+    vector<Node*>t=vector<Node*>(26,NULL);
+    bool isEnd=false;
+};
+
 class Trie {
 public:
-    unordered_map<string,int>mpp,mp;
+   
+    Node* root;
+    
     Trie() {
-        
+        root = new Node();
     }
     
     void insert(string word) {
-        mpp[word]++;
-        string s;
-        for(auto it : word)
-        {
-            s.push_back(it);
-            if(mp[s]==0) mp[s]++;
+       
+        Node* curr=root;
+        
+        for(int i=0;i<word.size();i++){
+            int idx=word[i]-'a';   // 0
+            if(curr->t[idx]==NULL)
+                curr->t[idx]=new Node(); // app
+            
+            curr=curr->t[idx];
         }
+        curr->isEnd=true;
     }
     
     bool search(string word) {
-        if(mpp[word]) return true;
-        return false;
+        
+        Node* curr=root;
+        for(int i=0;i<word.size();i++){
+            int idx=word[i]-'a';
+            
+            if(curr->t[idx]==NULL)
+                return false;
+            
+            curr=curr->t[idx];
+        }
+        
+        return curr->isEnd;
     }
     
     bool startsWith(string prefix) {
-        if(mp[prefix]) return true;
-        return false;
+        Node* curr=root;
+        for(int i=0;i<prefix.size();i++){
+            int idx=prefix[i]-'a';
+            
+            if(curr->t[idx]==NULL)
+                return false;
+            
+            curr=curr->t[idx];
+        }
+        return true;
     }
 };
 
