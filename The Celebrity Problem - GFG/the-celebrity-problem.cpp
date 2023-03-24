@@ -17,29 +17,32 @@ class Solution
         stack<int>st;
         
         for(int i=0;i<n;i++){
-            st.push(i); // 0 1 2
+            st.push(i);   // 0 1 2 
         }
         
         while(st.size()>1){
             
-            int a=st.top(); //2 1
+            int a=st.top();  // 2  1
             st.pop();
             
-            int b=st.top();  //1 0
+            int b=st.top();  //1  0
             st.pop();
             
-            if(M[a][b]==1){   //2->1  
-                st.push(b);      // 1
+            // if a knows b
+            if(M[a][b]==1){       // 
+                st.push(b);     // 0 1   
             }
-            else                  
-               st.push(a);   // 0->1  // 1
+        
+            // if b knows a
+           else{   // 0-1
+                st.push(a);     // 1
+            }
             
         }
         
-        
         for(int i=0;i<n;i++){
-            if(i!=st.top() and (M[i][st.top()]==0 or M[st.top()][i]==1))
-              return -1;
+            if(i!=st.top() and (M[st.top()][i]==1 or M[i][st.top()]==0))
+               return -1;
         }
         
         return st.top();
