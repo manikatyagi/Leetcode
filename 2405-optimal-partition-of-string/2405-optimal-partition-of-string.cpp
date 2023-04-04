@@ -2,23 +2,18 @@ class Solution {
 public:
     int partitionString(string s) {
         
-        unordered_set<char>se;
-        int c=1;
-        string str="";
-        
-        int r=0,l=0;
-        
-        while(r<s.size()){
+        vector<int>last_seen(26,-1);
+        int new_patition_idx=0;
+        int pat=1;
+        for(int i=0;i<s.size();i++){
             
-            if(se.find(s[r])==se.end()){
-                se.insert(s[r]);
-                r++;
+            if(last_seen[s[i]-'a']>=new_patition_idx){
+                pat++;
+                new_patition_idx=i;
             }
-            else{
-                se.clear();
-                c++;
-            }
+            
+            last_seen[s[i]-'a']=i;
         }
-        return c;
+        return pat;
     }
-}; // s  sabc  acs  s s s
+}; 
