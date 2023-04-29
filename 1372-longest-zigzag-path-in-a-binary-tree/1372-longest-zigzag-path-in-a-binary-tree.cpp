@@ -10,24 +10,23 @@
  * };
  */
 class Solution {
-public:
-    int res = 0;
-
-    void solve(TreeNode* node, bool goLeft, int currPathLen) {
-        if (!node) return;
-        res = max(res, currPathLen);
-        if (goLeft) {
-            solve(node->left, false, currPathLen + 1);
-            solve(node->right, true, 1);
-        } else {
-            solve(node->right, true, currPathLen + 1);
-            solve(node->left, false, 1);
-        }
+public: 
+   
+    void solve(bool dirc , TreeNode* root, int& max_len , int len){
+        
+        if(root==NULL)return ;
+        
+        max_len=max(max_len,len);
+        
+        solve(0,root->left,max_len,dirc?len+1:1);
+        solve(1,root->right,max_len,dirc?1:len+1);
     }
-
     int longestZigZag(TreeNode* root) {
-        solve(root, true, 0);
-        solve(root, false, 0);
-        return res;
+       int max_len=0;
+        
+        solve(0,root,max_len,0);
+        solve(1,root,max_len,0);
+        
+        return max_len;
     }
 };
