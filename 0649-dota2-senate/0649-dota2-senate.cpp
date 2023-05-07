@@ -1,18 +1,36 @@
 class Solution {
 public:
     string predictPartyVictory(string senate) {
-        queue<int> qr, qd;
-        int n = senate.length();
-
-        for(int i = 0; i<n; i++)
-            (senate[i] == 'R')?qr.push(i):qd.push(i);
-
-        while(!qr.empty() && !qd.empty()){
-            int r_id = qr.front(), d_id = qd.front();
-            qr.pop(), qd.pop();
-            (r_id < d_id)?qr.push(r_id + n):qd.push(d_id + n);
+        
+        queue<int>r;
+        queue<int>d;
+        
+        int n=senate.size();
+        
+        for(int i=0;i<n;i++){
+            
+            if(senate[i]=='R')r.push(i);
+            else d.push(i);
         }
         
-        return (qr.size() > qd.size())? "Radiant" : "Dire";
+        while(!r.empty() and !d.empty()){
+            
+            if(r.front()<d.front()){
+               
+                r.push(n++);
+            }
+            
+            else{
+                
+                d.push(n++);
+            }
+            
+            r.pop(),d.pop();
+            
+        }
+        
+        return r.empty()?"Dire":"Radiant";
+        
+        
     }
 };
