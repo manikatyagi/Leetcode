@@ -1,18 +1,32 @@
 class Solution {
 public:
     int numSubseq(vector<int>& nums, int target) {
-        sort(nums.begin(), nums.end());
-        int res = 0, n = nums.size(), l = 0, r = n - 1, mod = 1e9 + 7;
-        vector<int> pows(n, 1);
-        for (int i = 1 ; i < n ; ++i)
-            pows[i] = pows[i - 1] * 2 % mod;
-        while (l <= r) {
-            if (nums[l] + nums[r] > target) {
-                r--;
-            } else {
-                res = (res + pows[r - l++]) % mod;
-            }
+       const int mod=1000000007;
+        sort(nums.begin(),nums.end()); // 3 5 6 7  
+        int r=nums.size()-1;
+        int ans=0;
+        vector<int>p(nums.size(),0);
+        
+        p[0]=1;
+        for(int i=1;i<nums.size();i++){
+           
+            p[i]=(p[i-1]*2)%mod;
+           
         }
-        return res;
+        int l=0;
+        
+        while(l<=r){
+            
+            if(nums[l]+nums[r]<=target){
+                ans+=p[r-l];
+                ans=ans%mod;
+                l++;
+            }
+            else
+                r--;
+            
+            
+        }
+        return ans;
     }
 };
