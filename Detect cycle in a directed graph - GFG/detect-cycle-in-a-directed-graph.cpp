@@ -10,7 +10,6 @@ class Solution {
         vis[curr]=1;
         order[curr]=1;
         
-        
         for(int x:adj[curr]){
             if(vis[x]==0){
                 bool c=dfs(vis,adj,order,x);
