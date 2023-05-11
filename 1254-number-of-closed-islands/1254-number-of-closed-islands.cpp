@@ -1,37 +1,59 @@
 class Solution {
 public:
-    void dfs(int i, int j, vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != 0)
-            return;
-
-        grid[i][j] = 1;
-        dfs(i+1, j, grid);
-        dfs(i-1, j, grid);
-        dfs(i, j+1, grid);
-        dfs(i, j-1, grid);
-    }
     
+    void bfs(int i,int j,vector<vector<int>>&vis,vector<vector<int>>& grid){
+        vis[i][j]=1;
+         queue<pair<int,int>>q;
+        
+        int dirc[4][2]={{0,1},{1,0},{-1,0},{0,-1}};
+        q.push({i,j});
+        while(!q.empty()){
+            
+            int r=q.front().first;
+            int c=q.front().second;
+            
+            q.pop();
+            
+            for(auto d:dirc){
+                int row=r+d[0];
+                int col=c+d[1];
+                
+                if(row>=0 and col>=0 and row<grid.size() and col<grid[0].size() and vis[row][col]==0 and grid[row][col]==0){
+                    vis[row][col]=1;
+                    q.push({row,col});
+                }
+            }
+            
+            
+        
+        }
+    }
     int closedIsland(vector<vector<int>>& grid) {
         int m = grid.size(), n = grid[0].size();
-        for (int i = 0; i < m; i++) {
-            dfs(i, 0, grid);
-            dfs(i, n-1, grid);
-        }
-        for (int j = 0; j < n; j++) {
-            dfs(0, j, grid);
-            dfs(m-1, j, grid);
-        }
         
-        int count = 0;
-        for (int i = 1; i < m-1; i++) {
-            for (int j = 1; j < n-1; j++) {
-                if (grid[i][j] == 0) {
-                    dfs(i, j, grid);
-                    count++;
+        vector<vector<int>>vis(m,vector<int>(n,0));
+       
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if((i==0 or i==m-1 or j==0 or j==n-1) and grid[i][j]==0 and vis[i][j]==0){
+                   bfs(i,j,vis,grid);
                 }
             }
         }
-        return count;
+        
+        int ans=0;
+        
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==0 and vis[i][j]==0){
+                    ans++;
+                    bfs(i,j,vis,grid);
+                }
+            }
+        }
+        
+        
+        return ans;
+        
     }
 };
