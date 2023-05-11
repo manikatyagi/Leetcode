@@ -3,7 +3,7 @@ public:
     void bfs(int r,int c,vector<vector<int>>&vis,vector<vector<char>>& grid){
         vis[r][c]=1;
         
-        int dirc[8][2]={{0,1},{0,-1},{1,0},{-1,0}};
+        int dirc[4][2]={{0,1},{0,-1},{1,0},{-1,0}};
         queue<pair<int,int>>q;
         q.push({r,c});
         
