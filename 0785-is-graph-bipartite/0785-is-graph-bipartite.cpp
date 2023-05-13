@@ -1,8 +1,8 @@
 class Solution {
 public:
-    bool check(int start, vector<int>color,vector<vector<int>>& graph){
+    bool check(int start, vector<int>&color,vector<vector<int>>& graph){
          queue<int>q;
-    q.push(start);
+       q.push(start);
         
         color[start]=0;
         // 0- red  1- blue;
@@ -30,7 +30,8 @@ public:
         
         
         for(int i=0;i<n;i++){
-            if(check(i,color,graph)==false)return false;
+            if(color[i]==-1)
+               if(check(i,color,graph)==false)return false;
         }
         
         return true;
