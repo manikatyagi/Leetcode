@@ -2,24 +2,25 @@ class Solution {
 public:
     bool check(int start, vector<int>&color,vector<vector<int>>& graph){
          queue<int>q;
-       q.push(start);
+        
+        q.push(start);
         
         color[start]=0;
-        // 0- red  1- blue;
         
         while(!q.empty()){
-            int node=q.front();
             
+            int node=q.front();
             q.pop();
             
             for(auto it:graph[node]){
                 if(color[it]==-1){
-                    
                     color[it]=!color[node];
                     q.push(it);
                 }
-                else if(color[it]==color[node])return false;
                 
+                else{
+                    if(color[it]==color[node])return false;
+                }
             }
         }
         return true;
