@@ -53,24 +53,22 @@ you are required to complete the below method */
 void insert(stack<int>&s,int t){
     if(s.empty() or t>s.top()){
         s.push(t);
-        return ;
+        return;
     }
-      
-      
+    
     int e=s.top();
     s.pop();
     insert(s,t);
     s.push(e);
 }
 void Sort(stack<int>&s){
-    if(s.empty()){
-        return;
-    }
+    if(s.empty())return ;
     
-    int t=s.top(); //11 2 32 3 41
+    int t=s.top();
     s.pop();
     Sort(s);
     insert(s,t);
+    
 }
 void SortedStack :: sort() 
 {
