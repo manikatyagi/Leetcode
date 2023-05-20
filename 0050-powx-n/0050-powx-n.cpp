@@ -3,22 +3,30 @@ public:
    
     double myPow(double x, int n) {
         
-        double ans=1.0;
-        long long nn=n; // 10
-        if(nn<0)nn=-1*nn;
-        while(nn>0){
-            if(nn%2==0){
-                x=x*x;
-                nn=nn/2;
+        if(n==0)return 1;
+        
+        if(n==1)return x;
+        
+        
+        if(n==-1)return (1/x);
+        
+       double ans=myPow(x,n/2); // 2 
+        cout<<n<<" ";
+        if(n>0){
+            if(n%2==0){
+                return ans*ans;
             }
             else{
-                ans=ans*x;
-                nn=nn-1;
+                return ans*ans*x;
             }
         }
+        else{
+            if(n%2==0)return ans*ans;
+            
+            else
+                return (ans*ans)/x;
+        }
         
-        if(n<0)ans=1.0/ans;
-        
-        return ans;
+       // return ans;
     }
 };
