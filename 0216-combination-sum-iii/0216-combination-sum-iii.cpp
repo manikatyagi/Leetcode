@@ -11,7 +11,7 @@ public:
         
         for(int i=idx;i<=arr.size();i++){
             
-            if(i>idx and arr[i]==arr[i-1])continue;
+           // if(i>idx and arr[i]==arr[i-1])continue;
             
             if(arr[i]>t)break;
             
