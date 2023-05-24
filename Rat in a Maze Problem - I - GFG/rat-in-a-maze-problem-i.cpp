@@ -10,37 +10,35 @@ using namespace std;
 
 class Solution{
     public:
-    vector<string>ans;
-    void dfs(vector<vector<int>> &m,int n,vector<vector<int>>&vis,int i,int j,string s){
-       if(i<0 or j<0 or i>=n or j>=n)return ;
-        if(m[i][j]==0 or vis[i][j]==1)return ;
+    
+    void dfs(int x,int y,int n,vector<vector<int>>&vis,vector<string>&v,vector<vector<int>> &m,string s){
+        if(x<0 or y<0 or x>=n or y>=n or vis[x][y]==1 or m[x][y]==0)return ;
         
-        if(i==n-1 and j==n-1){
-            ans.push_back(s);
+        if(x==n-1 and y==n-1 ){
+            v.push_back(s);
             return ;
+            
         }
+        vis[x][y]=1;
         
-        vis[i][j]=1;
+        dfs(x+1,y,n,vis,v,m,s+'D');
+        dfs(x,y+1,n,vis,v,m,s+'R');
+        dfs(x-1,y,n,vis,v,m,s+'U');
+        dfs(x,y-1,n,vis,v,m,s+'L');
         
-        dfs(m,n,vis,i+1,j,s+'D');
-        dfs(m,n,vis,i-1,j,s+'U');
-        dfs(m,n,vis,i,j+1,s+'R');
-        dfs(m,n,vis,i,j-1,s+'L');
+        vis[x][y]=0;
         
-        vis[i][j]=0;
-      
     }
     vector<string> findPath(vector<vector<int>> &m, int n) {
         // Your code goes here
         vector<vector<int>>vis(n,vector<int>(n,0));
         
-        if(m[0][0]==0)return ans;
-        
-        if(m[n-1][n-1]==0)return ans;
+        if(m[n-1][n-1]==0 or m[0][0]==0)return {"-1"};
+        vector<string>v;
         string s="";
-        dfs(m,n,vis,0,0,s);
-        sort(ans.begin(),ans.end());
-        return ans;
+        dfs(0,0,n,vis,v,m,s);
+    
+        return v;
     }
 };
 
