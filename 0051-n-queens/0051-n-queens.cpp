@@ -1,56 +1,53 @@
 class Solution {
 public:
-    bool issafe(int n,int r,int c,vector<string>&v){
-        // check in row
-        
+    bool issafe(int r,int c,int n,vector<string>&board){
         int row=r,col=c;
+        
         while(col>=0){
-            if(v[row][col]=='Q')return false;
+            if(board[row][col]=='Q')return false;
             col--;
         }
         
-       
-        // diagonal upper left side 
-         row=r,col=c;
+        row=r,col=c;
+        
         while(row>=0 and col>=0){
-            if(v[row][col]=='Q')return false;
-            row--,col--;
+            if(board[row][col]=='Q')return false;
             
+            row--;
+            col--;
         }
-        // diagonal lower left;
+        
         row=r,col=c;
         
         while(row<n and col>=0){
-            if(v[row][col]=='Q')return false;
+            if(board[row][col]=='Q')return false;
             row++;
             col--;
         }
         return true;
     }
-    void func(int col,int n,vector<string>&v,vector<vector<string>>&ans){
+    void func(int col,int n,vector<string>&board,vector<vector<string>>&ans){
         if(col==n){
-            ans.push_back(v);
-            return;
-        } 
-        for(int r=0;r<n;r++){   // fixed row traversing in column   
-            if(issafe(n,r,col,v)){
-                v[r][col]='Q';
-                func(col+1,n,v,ans);
-                v[r][col]='.';
+            ans.push_back(board);
+            return ;
+        }
+        
+        for(int row=0;row<n;row++){
+            if(issafe(row,col,n,board)){
+                board[row][col]='Q';
+                func(col+1,n,board,ans);
+                board[row][col]='.';
             }
-        }      
-            
+        }
     }
 	vector<vector<string>> solveNQueens(int n) {
+        vector<string>board;
         vector<vector<string>>ans;
-		vector<string>v;
         string s(n,'.');
-        
         for(int i=0;i<n;i++){
-            v.push_back(s);
+            board.push_back(s);
         }
-        func(0,n,v,ans);
+        func(0,n,board,ans);
         return ans;
-        
 	}
 };
