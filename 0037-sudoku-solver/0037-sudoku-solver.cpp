@@ -2,17 +2,16 @@ class Solution {
 public:
     bool possible(int r,int c,char no,vector<vector<char>>& board){
         for(int i=0;i<9;i++){
+            
             if(board[i][c]==no)return false;
             
             if(board[r][i]==no)return false;
             
-            
-            if(board[3*(r/3)+ i/3][3* (c/3)+ i%3]==no)return false;
+            if(board[3*(r/3)+ i/3][3*(c/3)+ i%3]==no)return false;
         }
         return true;
     }
     bool solve(vector<vector<char>>& board){
-        
         for(int r=0;r<9;r++){
             for(int c=0;c<9;c++){
                 
@@ -27,9 +26,7 @@ public:
                             
                             else
                                 board[r][c]='.';
-                            
                         }
-                    
                     }
                     return false;
                 }
