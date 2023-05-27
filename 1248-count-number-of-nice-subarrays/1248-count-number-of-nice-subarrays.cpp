@@ -1,31 +1,29 @@
 class Solution {
 public:
-    int subArrayatMostK(vector<int>& nums, int k){
+    int numberOfSubarrays(vector<int>& nums, int k) {
         
-        int i=0,j=0;
-        int c=0;
-        
+        int sum=0;
+        unordered_map<int,int>mp;
         int ans=0;
+        for(int i=0;i<nums.size();i++){
+            
+            if(nums[i]%2==0)nums[i]=0;
+            else
+                nums[i]=1;
+        }
+        
         
         for(int i=0;i<nums.size();i++){
             
-            if(nums[i]%2==1){
-                c++;
-            }
+            sum+=nums[i];
             
-            while(c>k){
-                if(nums[j]%2==1)c--;
-                
-                j++;
+            if(sum==k)ans++;
+            
+            if(mp.find(sum-k)!=mp.end()){
+                ans+=mp[sum-k];
             }
-            ans+=i-j+1;
+            mp[sum]++;
         }
-            
         return ans;
-        
-    }
-    int numberOfSubarrays(vector<int>& nums, int k) {
-        
-        return subArrayatMostK(nums,k)-subArrayatMostK(nums,k-1);
     }
 };
