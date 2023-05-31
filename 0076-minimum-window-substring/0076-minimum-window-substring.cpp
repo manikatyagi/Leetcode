@@ -23,11 +23,8 @@ public:
           
             
             if(count==0){
+                cout<<j<<" ";
                 
-                 if(len>i-j+1){
-                    len=i-j+1;
-                     st=j;
-                }
                 
                 while(count==0){
                     
