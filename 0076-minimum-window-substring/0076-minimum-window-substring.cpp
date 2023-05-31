@@ -22,12 +22,11 @@ public:
             }
           
             
-            if(count==0){
-                cout<<j<<" ";
+            
                 
                 
                 while(count==0){
-                    
+                    cout<<j<<" ";
                     if(mp.count(s[j])){
                         mp[s[j]]++;
                         
@@ -41,7 +40,7 @@ public:
                     j++;
                 }
                
-            }
+            
         }
         
         
