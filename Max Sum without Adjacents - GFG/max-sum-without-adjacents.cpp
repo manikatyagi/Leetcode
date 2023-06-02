@@ -10,26 +10,20 @@ class Solution{
 public:	
 	// calculate the maximum sum with out adjacent
 	
-	int func(int* arr,int idx,vector<int>&dp){
-	    
-	    if(idx<0)return 0;
-	    if(idx==0)return arr[idx];
-	    
-	    if(dp[idx]!=-1)return dp[idx];
-	    
-	    
-	    int pick=arr[idx]+func(arr,idx-2,dp);
-	    int notpick=0+func(arr,idx-1,dp);
-	    
-	    return dp[idx]=max(pick,notpick);
-	    
-	}
 	int findMaxSum(int *arr, int n) {
 	    // code here
+	    vector<int>dp(n+1,0);
+	    dp[0]=arr[0];
 	    
-	  vector<int>dp(n+1,-1);
-	   return func(arr,n-1,dp);
-	 
+	    for(int i=1;i<n;i++){
+	         int pick=arr[i];
+	         if(i>1)pick+=dp[i-2];
+	         int notpick=dp[i-1];
+	         
+	         dp[i]=max(pick,notpick);
+	    }
+	   
+	    return dp[n-1];
 	}
 };
 
