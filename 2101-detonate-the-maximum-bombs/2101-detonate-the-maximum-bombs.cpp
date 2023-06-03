@@ -1,41 +1,53 @@
 class Solution {
 public:
-    int dfs(int curr,vector<vector<int>>& bombs,vector<int>&vis){
-       
-        vis[curr]=1;
-        int x=bombs[curr][0];
-        int y=bombs[curr][1];
-        int r=bombs[curr][2];
-        int c=1;
-        for(int i=0;i<bombs.size();i++){
+  void dfs(int curr,int& c,vector<int>&vis,vector<int>adj[]){
+       vis[curr]=1;
+        c++;
+        for(auto it:adj[curr]){
             
-            long long x1=abs(x-bombs[i][0]);
-            x1*=x1;
-            
-            long long y1=abs(y-bombs[i][1]);
-            y1*=y1;
-            
-            double dis=sqrt(x1+y1);
-            
-            if(dis<=r and vis[i]==0){
-            
-               c+= dfs(i,bombs,vis);
+            if(vis[it]==0){
+                
+                dfs(it,c,vis,adj);
             }
+                
         }
-        return c;
+       
     }
     int maximumDetonation(vector<vector<int>>& bombs) {
         
         int n=bombs.size();
         
+        vector<int>adj[n];
+        //[[1 2],[] [3] ,[4]]
+        for(int i=0;i<n;i++){
+             int x=bombs[i][0];
+             int y=bombs[i][1];
+             int r=bombs[i][2];
+            
+            for(int j=0;j<n;j++){
+                long long x1=abs(x-bombs[j][0]);
+                x1*=x1;
+            
+                long long y1=abs(y-bombs[j][1]);
+                 y1*=y1;
+            
+                 double dis=sqrt(x1+y1);
+                     
+                 if(dis<=r){
+                     adj[i].push_back(j);
+                 }
+                
+            }
+             
+        }
         int ans=INT_MIN;
         for(int i=0;i<n;i++){
-           vector<int>vis(n,0);
-            if(vis[i]!=1){
-                
-                ans=max(ans,dfs(i,bombs,vis));
-            }
-         
+           int c=0;
+            vector<int>vis(n,0);
+            
+            dfs(i,c,vis,adj);
+            
+            ans=max(ans,c);
             
         }
         return ans;
